@@ -48,11 +48,11 @@
 
 - **Light Style (亮色)**:
   ```text
-  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light.json
   ```
 - **Dark Style (暗色)**:
   ```text
-  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark.json
   ```
 
 ---
@@ -63,11 +63,11 @@
 
 - **Light Style (亮色)**:
   ```text
-  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light-bilingual.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light-bilingual.json
   ```
 - **Dark Style (暗色)**:
   ```text
-  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark-bilingual.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark-bilingual.json
   ```
 
 ---
@@ -77,10 +77,10 @@
 <details>
 <summary>点击展开查看国内加速代理链接 (直连 GitHub 较慢时使用)</summary>
 
-- 亮色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light.json`
-- 暗色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark.json`
-- 亮色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light-bilingual.json`
-- 暗色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark-bilingual.json`
+- 亮色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light.json`
+- 暗色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark.json`
+- 亮色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light-bilingual.json`
+- 暗色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark-bilingual.json`
 
 </details>
 

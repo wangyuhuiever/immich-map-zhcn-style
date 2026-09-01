@@ -553,8 +553,8 @@
     let map = null;
 
     const CDN_MAP = {
-      github: (file) => `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${file}`,
-      ghproxy: (file) => `https://ghproxy.net/https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${file}`
+      github: (file) => `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/refs/heads/${BRANCH}/${file}`,
+      ghproxy: (file) => `https://ghproxy.net/https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/refs/heads/${BRANCH}/${file}`
     };
 
     function updateUrlDisplay() {
