@@ -486,9 +486,8 @@
         </div>
 
         <div class="cdn-tabs">
-          <button class="cdn-tab active" onclick="switchCDN('jsdelivr', this)">jsDelivr CDN (国内加速)</button>
-          <button class="cdn-tab" onclick="switchCDN('github', this)">GitHub Raw</button>
-          <button class="cdn-tab" onclick="switchCDN('ghproxy', this)">ghproxy 代理</button>
+          <button class="cdn-tab active" onclick="switchCDN('github', this)">GitHub Raw (直连)</button>
+          <button class="cdn-tab" onclick="switchCDN('ghproxy', this)">ghproxy (国内代理加速)</button>
         </div>
 
         <div class="url-box">
@@ -550,11 +549,10 @@
     const BRANCH = 'main';
 
     let currentFile = 'style-light.json';
-    let currentCDN = 'jsdelivr';
+    let currentCDN = 'github';
     let map = null;
 
     const CDN_MAP = {
-      jsdelivr: (file) => `https://cdn.jsdelivr.net/gh/${REPO_OWNER}/${REPO_NAME}@${BRANCH}/${file}`,
       github: (file) => `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${file}`,
       ghproxy: (file) => `https://ghproxy.net/https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${file}`
     };

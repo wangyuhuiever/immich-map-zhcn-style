@@ -48,11 +48,11 @@
 
 - **Light Style (亮色)**:
   ```text
-  https://cdn.jsdelivr.net/gh/wangyuhuiever/immich-map-zhcn-style@main/style-light.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light.json
   ```
 - **Dark Style (暗色)**:
   ```text
-  https://cdn.jsdelivr.net/gh/wangyuhuiever/immich-map-zhcn-style@main/style-dark.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark.json
   ```
 
 ---
@@ -63,29 +63,25 @@
 
 - **Light Style (亮色)**:
   ```text
-  https://cdn.jsdelivr.net/gh/wangyuhuiever/immich-map-zhcn-style@main/style-light-bilingual.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light-bilingual.json
   ```
 - **Dark Style (暗色)**:
   ```text
-  https://cdn.jsdelivr.net/gh/wangyuhuiever/immich-map-zhcn-style@main/style-dark-bilingual.json
+  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark-bilingual.json
   ```
 
 ---
 
-### 备用 CDN 链接（如果网络无法访问 jsDelivr）
+### 国内网络加速链接 (ghproxy 代理)
 
 <details>
-<summary>点击展开查看 GitHub Raw / 代理链接</summary>
+<summary>点击展开查看国内加速代理链接 (直连 GitHub 较慢时使用)</summary>
 
-#### GitHub Raw (直接访问):
-- 亮色纯中文: `https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light.json`
-- 暗色纯中文: `https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark.json`
-- 亮色双语: `https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light-bilingual.json`
-- 暗色双语: `https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark-bilingual.json`
-
-#### ghproxy 国内加速代理:
 - 亮色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light.json`
 - 暗色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark.json`
+- 亮色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-light-bilingual.json`
+- 暗色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/main/style-dark-bilingual.json`
+
 </details>
 
 ---
@@ -139,7 +135,7 @@ powershell -ExecutionPolicy Bypass -File .\generate_styles.ps1
 A: 安卓 App 会缓存旧的地图瓦片和样式数据。进入手机系统设置 → **应用管理** → 找到 **Immich** → **存储占用** → **清除缓存 (Clear Cache)**，然后重新打开 Immich 即可。
 
 **Q: 是否需要开启代理才能加载地图？**  
-A: 地图瓦片源使用的是 Immich 官方全球 CDN（`tiles.immich.cloud`），正常情况下均可直连。本项目提供的 jsDelivr CDN 链接在国内拥有极速分发节点。
+A: 地图瓦片源使用的是 Immich 官方全球 CDN（`tiles.immich.cloud`），正常情况下均可直连。如果直连 GitHub 获取样式 JSON 较慢，可选用上方提供的国内加速代理链接或使用本地 Nginx 托管。
 
 ---
 
