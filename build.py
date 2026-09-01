@@ -70,6 +70,17 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
         if layer_id in ("address_label", "roads_oneway"):
             continue
 
+        # Fallback hierarchy: Simplified Chinese -> Traditional Chinese -> English -> Native Local Name
+        # (Prioritizing English before native name prevents local non-Latin scripts like Arabic/Cyrillic when Chinese is absent)
+        zh_first_expr = [
+            "coalesce",
+            ["get", "name:zh-Hans"],
+            ["get", "name:zh"],
+            ["get", "name:zh-Hant"],
+            ["get", "name:en"],
+            ["get", "name"],
+        ]
+
         if mode == "zh-cn":
             # Simplified Chinese first
             if layer_id == "places_region":
@@ -81,28 +92,16 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
                         ["get", "name:zh-Hans"],
                         ["get", "name:zh"],
                         ["get", "name:zh-Hant"],
+                        ["get", "name:en"],
                         ["get", "name"],
                         ["get", "ref"],
                     ],
                     6,
-                    [
-                        "coalesce",
-                        ["get", "name:zh-Hans"],
-                        ["get", "name:zh"],
-                        ["get", "name:zh-Hant"],
-                        ["get", "name"],
-                        ["get", "name:en"],
-                    ],
+                    zh_first_expr,
                 ]
             else:
-                layer["layout"]["text-field"] = [
-                    "coalesce",
-                    ["get", "name:zh-Hans"],
-                    ["get", "name:zh"],
-                    ["get", "name:zh-Hant"],
-                    ["get", "name"],
-                    ["get", "name:en"],
-                ]
+                layer["layout"]["text-field"] = zh_first_expr
+
         elif mode == "bilingual":
             # Bilingual (Chinese + English if available and different)
             bilingual_expr = [
@@ -119,14 +118,7 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
                     "\n",
                     ["get", "name:en"],
                 ],
-                [
-                    "coalesce",
-                    ["get", "name:zh-Hans"],
-                    ["get", "name:zh"],
-                    ["get", "name:zh-Hant"],
-                    ["get", "name"],
-                    ["get", "name:en"],
-                ],
+                zh_first_expr,
             ]
 
             if layer_id == "places_region":
@@ -137,6 +129,7 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
                         "coalesce",
                         ["get", "name:zh-Hans"],
                         ["get", "name:zh"],
+                        ["get", "name:en"],
                         ["get", "name"],
                         ["get", "ref"],
                     ],
@@ -144,14 +137,7 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
                     bilingual_expr,
                 ]
             elif layer_id in ("water_waterway_label", "roads_labels_minor"):
-                layer["layout"]["text-field"] = [
-                    "coalesce",
-                    ["get", "name:zh-Hans"],
-                    ["get", "name:zh"],
-                    ["get", "name:zh-Hant"],
-                    ["get", "name"],
-                    ["get", "name:en"],
-                ]
+                layer["layout"]["text-field"] = zh_first_expr
             else:
                 layer["layout"]["text-field"] = bilingual_expr
 

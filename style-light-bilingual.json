@@ -2305,11 +2305,11 @@
           ],
           [
             "get",
-            "name"
+            "name:en"
           ],
           [
             "get",
-            "name:en"
+            "name"
           ]
         ],
         "text-size": 12,
@@ -2380,11 +2380,11 @@
           ],
           [
             "get",
-            "name"
+            "name:en"
           ],
           [
             "get",
-            "name:en"
+            "name"
           ]
         ],
         "text-size": 12
@@ -2465,11 +2465,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -2562,11 +2562,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -2647,11 +2647,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -2752,11 +2752,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -2891,11 +2891,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -3068,11 +3068,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -3154,6 +3154,10 @@
             ],
             [
               "get",
+              "name:en"
+            ],
+            [
+              "get",
               "name"
             ],
             [
@@ -3214,11 +3218,11 @@
               ],
               [
                 "get",
-                "name"
+                "name:en"
               ],
               [
                 "get",
-                "name:en"
+                "name"
               ]
             ]
           ]
@@ -3334,11 +3338,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
@@ -3670,11 +3674,11 @@
             ],
             [
               "get",
-              "name"
+              "name:en"
             ],
             [
               "get",
-              "name:en"
+              "name"
             ]
           ]
         ],
