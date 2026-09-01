@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
 Immich Map Bilingual (Chinese + English) Style Generator
-Minimal patch on official Immich style.json:
-- Keeps official fonts & glyphs untouched
-- Enhances text-field with Chinese + English bilingual labels
+Features:
+- MapLibre official CJK PBF font glyphs support for mobile (Android/iOS)
+- Automatic Noto Sans Medium -> Noto Sans Bold mapping
+- Chinese + English bilingual labels
 - Generates style-light.json & style-dark.json
 """
 
@@ -13,6 +14,7 @@ import urllib.request
 
 LIGHT_URL = "https://tiles.immich.cloud/v1/style/light.json"
 DARK_URL = "https://tiles.immich.cloud/v1/style/dark.json"
+GLYPHS_URL = "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKSPACE_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..")) if os.path.basename(SCRIPT_DIR) == "scripts" else SCRIPT_DIR
@@ -27,10 +29,26 @@ def fetch_json(url: str) -> dict:
         return json.loads(resp.read().decode("utf-8"))
 
 
+def replace_font_names(obj):
+    """Recursively replaces font names that are not available in demotiles (Noto Sans Medium -> Noto Sans Bold)."""
+    if isinstance(obj, dict):
+        return {k: replace_font_names(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [replace_font_names(v) for v in obj]
+    elif isinstance(obj, str):
+        if obj == "Noto Sans Medium":
+            return "Noto Sans Bold"
+        return obj
+    return obj
+
+
 def transform_bilingual_style(style_data: dict, theme: str) -> dict:
     style = json.loads(json.dumps(style_data))
+    style = replace_font_names(style)
+
     style["id"] = f"immich-map-{theme}-bilingual"
     style["name"] = f"Immich Map ({theme} - bilingual)"
+    style["glyphs"] = GLYPHS_URL
 
     # Bilingual expression: Chinese + English if different, otherwise fallback to Chinese / English / local name
     zh_fallback = [
@@ -107,7 +125,7 @@ def main():
 
     targets = [
         ("style-light.json", transform_bilingual_style(light_raw, "light")),
-        ("style-dark.json", transform_style := transform_bilingual_style(dark_raw, "dark")),
+        ("style-dark.json", transform_bilingual_style(dark_raw, "dark")),
     ]
 
     for filename, data in targets:
@@ -123,7 +141,7 @@ def main():
             os.remove(old_path)
             print(f"Removed legacy file: {old_file}")
 
-    print("\nBilingual styles generated with minimal changes to official sources!")
+    print("\nBilingual styles generated with CJK PBF font support!")
 
 
 if __name__ == "__main__":
