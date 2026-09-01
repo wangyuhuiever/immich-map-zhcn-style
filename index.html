@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Immich 中文地图样式 | Immich Map Chinese Style</title>
+  <meta name="description" content="为 Immich 照片管理系统定制的中文矢量地图样式，支持亮色/暗色模式、纯中文与中英双语，完美解决安卓 App / iOS / Web 端只显示英文的问题。">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- MapLibre GL JS -->
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #131b2e;
+      --bg-card: rgba(19, 27, 46, 0.85);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --accent-color: #4378ff;
+      --accent-hover: #5d8eff;
+      --accent-glow: rgba(67, 120, 255, 0.35);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --success-color: #10b981;
+      --card-radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #4378ff, #7928ca);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .header-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-github:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      min-height: calc(100vh - 72px);
+    }
+
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 500px;
+      }
+    }
+
+    /* Left Sidebar: Control & Documentation */
+    .sidebar {
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 1.75rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-height: calc(100vh - 72px);
+    }
+
+    .section-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--accent-color);
+    }
+
+    /* Style Selector Buttons */
+    .style-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .style-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.85rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .style-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .style-card.active {
+      background: rgba(67, 120, 255, 0.12);
+      border-color: var(--accent-color);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .style-card-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .style-card-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .badge-primary {
+      background: rgba(67, 120, 255, 0.25);
+      color: #93b5ff;
+    }
+
+    /* URL Copy Block */
+    .url-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .url-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .url-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .url-input-wrap {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .url-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      color: #7dd3fc;
+      font-family: monospace;
+      font-size: 0.8rem;
+      outline: none;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .btn-copy {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-copy:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .btn-copy.copied {
+      background: var(--success-color);
+    }
+
+    /* Tabs for CDN switch */
+    .cdn-tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cdn-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cdn-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .cdn-tab.active {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    /* Explanation & Steps */
+    .info-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .info-card strong {
+      color: var(--text-primary);
+    }
+
+    .steps-list {
+      padding-left: 1.25rem;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .steps-list li {
+      font-size: 0.82rem;
+    }
+
+    /* Right Map Container */
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-overlay {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      pointer-events: none;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-overlay-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success-color);
+      box-shadow: 0 0 8px var(--success-color);
+    }
+
+    .quick-cities {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 10;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .city-btn {
+      background: rgba(19, 27, 46, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .city-btn:hover {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="brand">
+      <div class="brand-icon">🗺️</div>
+      <div class="brand-text">
+        <h1>Immich 中文地图样式</h1>
+        <p>Immich Map Chinese Vector Style</p>
+      </div>
+    </a>
+    <div class="header-links">
+      <a href="https://github.com/wangyuhuiever/immich-map-zhcn-style" target="_blank" class="btn-github">
+        <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        GitHub 仓库
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left Configuration Panel -->
+    <aside class="sidebar">
+      <div>
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          选择地图样式
+        </div>
+        <div class="style-grid">
+          <div class="style-card active" onclick="switchStyle('style-light.json', this)">
+            <div class="style-card-title">
+              ☀️ 亮色 · 纯中文
+              <span class="badge badge-primary">推荐</span>
+            </div>
+            <div class="style-card-desc">国内国外全中文优先，界面清爽</div>
+          </div>
+          
+          <div class="style-card" onclick="switchStyle('style-dark.json', this)">
+            <div class="style-card-title">
+              🌙 暗色 · 纯中文
+              <span class="badge badge-primary">推荐</span>
+            </div>
+            <div class="style-card-desc">夜间深色模式，中文地名优先</div>
+          </div>
+
+          <div class="style-card" onclick="switchStyle('style-light-bilingual.json', this)">
+            <div class="style-card-title">
+              ☀️ 亮色 · 中英双语
+            </div>
+            <div class="style-card-desc">中文+当地英文对照双行显示</div>
+          </div>
+
+          <div class="style-card" onclick="switchStyle('style-dark-bilingual.json', this)">
+            <div class="style-card-title">
+              🌙 暗色 · 中英双语
+            </div>
+            <div class="style-card-desc">夜间深色模式，中英文对照显示</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- URL Copy Section -->
+      <div>
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+          样式配置链接 (填入 Immich)
+        </div>
+
+        <div class="cdn-tabs">
+          <button class="cdn-tab active" onclick="switchCDN('jsdelivr', this)">jsDelivr CDN (国内加速)</button>
+          <button class="cdn-tab" onclick="switchCDN('github', this)">GitHub Raw</button>
+          <button class="cdn-tab" onclick="switchCDN('ghproxy', this)">ghproxy 代理</button>
+        </div>
+
+        <div class="url-box">
+          <div class="url-header">
+            <span class="url-title" id="currentStyleLabel">亮色 · 纯中文样式 URL</span>
+          </div>
+          <div class="url-input-wrap">
+            <input type="text" id="styleUrlInput" class="url-input" readonly value="">
+            <button class="btn-copy" id="copyBtn" onclick="copyUrl()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              复制
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Immich Guide -->
+      <div>
+        <div class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          Immich 配置步骤
+        </div>
+        <div class="info-card">
+          <p><strong>为何默认只有英文？</strong> 官方样式在移动端（Android/iOS）因表达式判定退回到了英文 <code>name:en</code> 分支，且未查询全球中文翻译字段。本项目已将所有层级重构为优先读取 <code>name:zh-Hans</code>。</p>
+          <ol class="steps-list">
+            <li>打开 Immich 网页端，点击右上角头像进入 <strong>管理后台 (Administration)</strong>。</li>
+            <li>在左侧菜单点击 <strong>设置 (Settings)</strong> → <strong>地图与 GPS (Map & GPS Settings)</strong>。</li>
+            <li>展开 <strong>地图设置 (Map Settings)</strong>。</li>
+            <li>将上方复制的 URL 分别粘贴到 <strong>Light Style (亮色)</strong> 或 <strong>Dark Style (暗色)</strong>。</li>
+            <li>点击 <strong>保存 (Save)</strong>，刷新页面或重启 App 即可看到中文地图！</li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Map View -->
+    <div class="map-container">
+      <div id="map"></div>
+      <div class="map-overlay">
+        <div class="map-overlay-dot"></div>
+        <span id="currentStatus">正在加载实时矢量地图...</span>
+      </div>
+
+      <!-- Quick Navigation Buttons -->
+      <div class="quick-cities">
+        <button class="city-btn" onclick="flyTo([116.4074, 39.9042], 10)">🇨🇳 北京</button>
+        <button class="city-btn" onclick="flyTo([121.4737, 31.2304], 11)">🇨🇳 上海</button>
+        <button class="city-btn" onclick="flyTo([139.6917, 35.6895], 11)">🇯🇵 东京 (Tokyo)</button>
+        <button class="city-btn" onclick="flyTo([-74.0060, 40.7128], 11)">🇺🇸 纽约 (New York)</button>
+        <button class="city-btn" onclick="flyTo([2.3522, 48.8566], 11)">🇫🇷 巴黎 (Paris)</button>
+        <button class="city-btn" onclick="flyTo([-0.1276, 51.5074], 11)">🇬🇧 伦敦 (London)</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const REPO_OWNER = 'wangyuhuiever';
+    const REPO_NAME = 'immich-map-zhcn-style';
+    const BRANCH = 'main';
+
+    let currentFile = 'style-light.json';
+    let currentCDN = 'jsdelivr';
+    let map = null;
+
+    const CDN_MAP = {
+      jsdelivr: (file) => `https://cdn.jsdelivr.net/gh/${REPO_OWNER}/${REPO_NAME}@${BRANCH}/${file}`,
+      github: (file) => `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${file}`,
+      ghproxy: (file) => `https://ghproxy.net/https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${file}`
+    };
+
+    function updateUrlDisplay() {
+      const url = CDN_MAP[currentCDN](currentFile);
+      document.getElementById('styleUrlInput').value = url;
+    }
+
+    function initMap() {
+      map = new maplibre_gl.Map({
+        container: 'map',
+        style: './style-light.json',
+        center: [116.4074, 39.9042], // Beijing
+        zoom: 4,
+        hash: true
+      });
+
+      map.addControl(new maplibre_gl.NavigationControl(), 'top-left');
+      map.addControl(new maplibre_gl.FullscreenControl(), 'top-left');
+
+      map.on('load', () => {
+        document.getElementById('currentStatus').innerText = '当前样式：亮色 · 纯中文 (Protomaps 矢量源)';
+      });
+    }
+
+    function switchStyle(file, element) {
+      currentFile = file;
+      document.querySelectorAll('.style-card').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+
+      const nameMap = {
+        'style-light.json': '亮色 · 纯中文',
+        'style-dark.json': '暗色 · 纯中文',
+        'style-light-bilingual.json': '亮色 · 中英双语',
+        'style-dark-bilingual.json': '暗色 · 中英双语'
+      };
+
+      document.getElementById('currentStyleLabel').innerText = `${nameMap[file]} URL`;
+      document.getElementById('currentStatus').innerText = `已切换至：${nameMap[file]}`;
+      updateUrlDisplay();
+
+      if (map) {
+        map.setStyle(`./${file}`);
+      }
+    }
+
+    function switchCDN(cdnKey, element) {
+      currentCDN = cdnKey;
+      document.querySelectorAll('.cdn-tab').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      updateUrlDisplay();
+    }
+
+    function copyUrl() {
+      const input = document.getElementById('styleUrlInput');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        const btn = document.getElementById('copyBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `✓ 已复制`;
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function flyTo(coords, zoomLevel) {
+      if (map) {
+        map.flyTo({
+          center: coords,
+          zoom: zoomLevel,
+          essential: true
+        });
+      }
+    }
+
+    // Init
+    updateUrlDisplay();
+    window.addEventListener('DOMContentLoaded', initMap);
+  </script>
+</body>
+</html>
