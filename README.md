@@ -42,9 +42,9 @@
 4. 将下方对应的 URL 填入 **Light Style** 和 **Dark Style** 输入框中。
 5. 点击 **Save (保存)**，刷新网页或重启手机 App 即可生效！
 
-### 方案 A：纯中文优先（推荐 🌟）
+### 样式配置 URL (中英双语对照 🌟)
 
-> 国内国外全部优先显示中文名称，无中文翻译时显示本地原名或英文。
+> 国内地名显示中文，国外主要地名首行显示中文、次行显示英文；无中文翻译时显示英文。
 
 - **Light Style (亮色)**:
   ```text
@@ -57,30 +57,13 @@
 
 ---
 
-### 方案 B：中英双语对照
-
-> 国内地名显示中文，国外地名第一行显示中文、第二行显示英文/原名。
-
-- **Light Style (亮色)**:
-  ```text
-  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light-bilingual.json
-  ```
-- **Dark Style (暗色)**:
-  ```text
-  https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark-bilingual.json
-  ```
-
----
-
 ### 国内网络加速链接 (ghproxy 代理)
 
 <details>
 <summary>点击展开查看国内加速代理链接 (直连 GitHub 较慢时使用)</summary>
 
-- 亮色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light.json`
-- 暗色纯中文: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark.json`
-- 亮色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light-bilingual.json`
-- 暗色双语: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark-bilingual.json`
+- 亮色: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-light.json`
+- 暗色: `https://ghproxy.net/https://raw.githubusercontent.com/wangyuhuiever/immich-map-zhcn-style/refs/heads/main/style-dark.json`
 
 </details>
 

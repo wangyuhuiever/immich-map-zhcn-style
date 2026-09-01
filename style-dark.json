@@ -1,7 +1,7 @@
 {
   "version": 8,
-  "name": "Immich Map (dark - zh-cn)",
-  "id": "immich-map-dark-zh-cn",
+  "name": "Immich Map (dark - bilingual)",
+  "id": "immich-map-dark-bilingual",
   "sources": {
     "vector": {
       "type": "vector",
@@ -2414,26 +2414,63 @@
           "Noto Sans Italic"
         ],
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-size": [
@@ -2474,26 +2511,63 @@
           "Noto Sans Italic"
         ],
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-size": 10,
@@ -2522,26 +2596,63 @@
           "Noto Sans Italic"
         ],
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-size": [
@@ -2590,26 +2701,63 @@
           "Noto Sans Regular"
         ],
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-size": 12
@@ -2692,26 +2840,63 @@
         ],
         "text-justify": "auto",
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-size": [
@@ -2832,26 +3017,63 @@
           ]
         ],
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-font": [
@@ -2932,10 +3154,6 @@
             ],
             [
               "get",
-              "name:zh-Hant"
-            ],
-            [
-              "get",
               "name:en"
             ],
             [
@@ -2949,26 +3167,63 @@
           ],
           6,
           [
-            "coalesce",
+            "case",
             [
-              "get",
-              "name:zh-Hans"
+              "all",
+              [
+                "has",
+                "name:zh-Hans"
+              ],
+              [
+                "has",
+                "name:en"
+              ],
+              [
+                "!=",
+                [
+                  "get",
+                  "name:zh-Hans"
+                ],
+                [
+                  "get",
+                  "name:en"
+                ]
+              ]
             ],
             [
-              "get",
-              "name:zh"
+              "concat",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              "\n",
+              [
+                "get",
+                "name:en"
+              ]
             ],
             [
-              "get",
-              "name:zh-Hant"
-            ],
-            [
-              "get",
-              "name:en"
-            ],
-            [
-              "get",
-              "name"
+              "coalesce",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:zh"
+              ],
+              [
+                "get",
+                "name:zh-Hant"
+              ],
+              [
+                "get",
+                "name:en"
+              ],
+              [
+                "get",
+                "name"
+              ]
             ]
           ]
         ],
@@ -3032,26 +3287,63 @@
         ],
         "icon-size": 0.7,
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-font": [
@@ -3067,7 +3359,7 @@
           [
             "literal",
             [
-              "Noto Sans Bold"
+              "Noto Sans Medium"
             ]
           ],
           [
@@ -3331,30 +3623,67 @@
           ]
         ],
         "text-field": [
-          "coalesce",
+          "case",
           [
-            "get",
-            "name:zh-Hans"
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
           ],
           [
-            "get",
-            "name:zh"
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
           ],
           [
-            "get",
-            "name:zh-Hant"
-          ],
-          [
-            "get",
-            "name:en"
-          ],
-          [
-            "get",
-            "name"
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
           ]
         ],
         "text-font": [
-          "Noto Sans Bold"
+          "Noto Sans Medium"
         ],
         "text-size": [
           "interpolate",
@@ -3462,5 +3791,5 @@
     }
   ],
   "sprite": "https://static.immich.cloud/tiles/sprites/v2/dark",
-  "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
+  "glyphs": "https://static.immich.cloud/tiles/fonts/{fontstack}/{range}.pbf"
 }

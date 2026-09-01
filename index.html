@@ -448,32 +448,18 @@
         <div class="style-grid">
           <div class="style-card active" onclick="switchStyle('style-light.json', this)">
             <div class="style-card-title">
-              ☀️ 亮色 · 纯中文
+              ☀️ 亮色主题 (Light)
               <span class="badge badge-primary">推荐</span>
             </div>
-            <div class="style-card-desc">国内国外全中文优先，界面清爽</div>
+            <div class="style-card-desc">国内中文，国外中英双语对照</div>
           </div>
           
           <div class="style-card" onclick="switchStyle('style-dark.json', this)">
             <div class="style-card-title">
-              🌙 暗色 · 纯中文
+              🌙 暗色主题 (Dark)
               <span class="badge badge-primary">推荐</span>
             </div>
-            <div class="style-card-desc">夜间深色模式，中文地名优先</div>
-          </div>
-
-          <div class="style-card" onclick="switchStyle('style-light-bilingual.json', this)">
-            <div class="style-card-title">
-              ☀️ 亮色 · 中英双语
-            </div>
-            <div class="style-card-desc">中文+当地英文对照双行显示</div>
-          </div>
-
-          <div class="style-card" onclick="switchStyle('style-dark-bilingual.json', this)">
-            <div class="style-card-title">
-              🌙 暗色 · 中英双语
-            </div>
-            <div class="style-card-desc">夜间深色模式，中英文对照显示</div>
+            <div class="style-card-desc">夜间深色模式，中英双语对照</div>
           </div>
         </div>
       </div>
@@ -585,10 +571,8 @@
       element.classList.add('active');
 
       const nameMap = {
-        'style-light.json': '亮色 · 纯中文',
-        'style-dark.json': '暗色 · 纯中文',
-        'style-light-bilingual.json': '亮色 · 中英双语',
-        'style-dark-bilingual.json': '暗色 · 中英双语'
+        'style-light.json': '亮色主题 (Light)',
+        'style-dark.json': '暗色主题 (Dark)'
       };
 
       document.getElementById('currentStyleLabel').innerText = `${nameMap[file]} URL`;
