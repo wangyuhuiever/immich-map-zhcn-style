@@ -3359,7 +3359,7 @@
           [
             "literal",
             [
-              "Noto Sans Bold"
+              "Noto Sans Medium"
             ]
           ],
           [
@@ -3683,7 +3683,7 @@
           ]
         ],
         "text-font": [
-          "Noto Sans Bold"
+          "Noto Sans Medium"
         ],
         "text-size": [
           "interpolate",
@@ -3791,5 +3791,5 @@
     }
   ],
   "sprite": "https://static.immich.cloud/tiles/sprites/v2/dark",
-  "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
+  "glyphs": "https://static.immich.cloud/tiles/fonts/{fontstack}/{range}.pbf"
 }
