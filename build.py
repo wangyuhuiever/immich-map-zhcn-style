@@ -10,11 +10,11 @@ Fetches official light & dark style.json from Immich and generates:
 
 import json
 import os
-import sys
 import urllib.request
 
 LIGHT_URL = "https://tiles.immich.cloud/v1/style/light.json"
 DARK_URL = "https://tiles.immich.cloud/v1/style/dark.json"
+GLYPHS_URL = "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKSPACE_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..")) if os.path.basename(SCRIPT_DIR) == "scripts" else SCRIPT_DIR
@@ -35,6 +35,10 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
     
     style["id"] = f"immich-map-{theme}-{mode}"
     style["name"] = f"Immich Map ({theme} - {mode})"
+    
+    # Use MapLibre official glyphs server containing full CJK PBF font glyphs
+    # (Fixes the issue where mobile MapLibre Native cannot render Chinese due to empty PBFs on Immich static server)
+    style["glyphs"] = GLYPHS_URL
 
     for layer in style.get("layers", []):
         if layer.get("type") != "symbol":
@@ -42,7 +46,24 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
 
         layer_id = layer.get("id", "")
         layout = layer.get("layout", {})
-        if not layout or "text-field" not in layout:
+        if not layout:
+            continue
+
+        # Adjust text-font: demotiles has Noto Sans Regular, Noto Sans Bold, Noto Sans Italic
+        if "text-font" in layout:
+            font = layout["text-font"]
+            if font == ["Noto Sans Medium"]:
+                layout["text-font"] = ["Noto Sans Bold"]
+            elif isinstance(font, list) and len(font) == 5 and font[0] == "case":
+                # ["case", ["<=", ["get", "min_zoom"], 5], ["literal", ["Noto Sans Medium"]], ["literal", ["Noto Sans Regular"]]]
+                layout["text-font"] = [
+                    "case",
+                    ["<=", ["get", "min_zoom"], 5],
+                    ["literal", ["Noto Sans Bold"]],
+                    ["literal", ["Noto Sans Regular"]],
+                ]
+
+        if "text-field" not in layout:
             continue
 
         # Skip non-language layers
@@ -160,7 +181,7 @@ def main():
             json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"Saved: {dest} ({os.path.getsize(dest)} bytes)")
 
-    print("\nAll styles successfully generated!")
+    print("\nAll styles successfully generated with CJK PBF font support!")
 
 
 if __name__ == "__main__":

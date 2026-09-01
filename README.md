@@ -118,13 +118,10 @@ services:
 - 当官方样式更新（如调整配色、新增地物图层）时，Action 会自动将中文逻辑注入并提交更新到仓库。
 - 支持在 GitHub 仓库的 **Actions** 标签页中随时点击 **Run workflow** 手动触发即时构建。
 
-本地手动构建（支持 Python / PowerShell）：
+本地手动构建：
 ```bash
-# 使用 Python 构建 (跨平台 / Linux / macOS / Windows)
+# 跨平台构建 (支持 Linux / macOS / Windows)
 python build.py
-
-# 或使用 PowerShell 构建 (Windows)
-powershell -ExecutionPolicy Bypass -File .\generate_styles.ps1
 ```
 
 ---
