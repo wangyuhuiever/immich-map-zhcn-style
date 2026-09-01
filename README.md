@@ -114,12 +114,20 @@ services:
 
 ---
 
-## 🔄 自动化更新与构建
+## 🔄 自动化更新与构建 (GitHub Actions)
 
-如果未来 Immich 官方更新了默认样式的图层配色或结构，您可以通过仓库自带的 PowerShell 脚本一键重新同步并构建：
+本项目配置了 **GitHub Actions 定时工作流**（[`.github/workflows/sync-styles.yml`](file:///.github/workflows/sync-styles.yml)）：
+- **每天北京时间 11:00 (UTC 03:00) 自动运行**。
+- 自动拉取 Immich 官方最新发布的矢量地图样式进行分析。
+- 当官方样式更新（如调整配色、新增地物图层）时，Action 会自动将中文逻辑注入并提交更新到仓库。
+- 支持在 GitHub 仓库的 **Actions** 标签页中随时点击 **Run workflow** 手动触发即时构建。
 
-```powershell
-# 运行构建脚本，自动拉取官方最新 style.json 并重构中文图层
+本地手动构建（支持 Python / PowerShell）：
+```bash
+# 使用 Python 构建 (跨平台 / Linux / macOS / Windows)
+python build.py
+
+# 或使用 PowerShell 构建 (Windows)
 powershell -ExecutionPolicy Bypass -File .\generate_styles.ps1
 ```
 
@@ -138,3 +146,4 @@ A: 地图瓦片源使用的是 Immich 官方全球 CDN（`tiles.immich.cloud`）
 ## 📄 开源许可证
 
 本项目基于 [MIT License](LICENSE) 开源。地图矢量数据源来自 [OpenStreetMap](https://www.openstreetmap.org/copyright) 及 [Protomaps](https://protomaps.com/)。
+

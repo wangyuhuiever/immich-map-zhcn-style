@@ -1,0 +1,49 @@
+name: Sync & Update Map Styles
+
+on:
+  schedule:
+    # 每天 UTC 时间 03:00 (北京时间 11:00) 定时运行
+    - cron: '0 3 * * *'
+  workflow_dispatch: # 支持在 GitHub Actions 页面手动点击一键运行
+  push:
+    branches:
+      - main
+    paths:
+      - 'build.py'
+      - '.github/workflows/sync-styles.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Check & Sync Upstream Styles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run style builder
+        run: |
+          python build.py
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Check for changes in style json files
+          if [ -n "$(git status --porcelain style-*.json)" ]; then
+            echo "Upstream changes detected! Committing and pushing updates..."
+            git add style-*.json
+            git commit -m "chore(sync): auto sync map styles with upstream Immich [skip ci]"
+            git push
+          else
+            echo "No upstream changes detected. All styles are up to date."
+          fi
