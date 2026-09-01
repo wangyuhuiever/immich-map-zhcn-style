@@ -29,9 +29,23 @@ def fetch_json(url: str) -> dict:
         return json.loads(resp.read().decode("utf-8"))
 
 
+def replace_font_names(obj):
+    """Recursively replaces font names that are not available in demotiles (e.g., Noto Sans Medium -> Noto Sans Bold)."""
+    if isinstance(obj, dict):
+        return {k: replace_font_names(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [replace_font_names(v) for v in obj]
+    elif isinstance(obj, str):
+        if obj == "Noto Sans Medium":
+            return "Noto Sans Bold"
+        return obj
+    return obj
+
+
 def transform_style(style_data: dict, mode: str, theme: str) -> dict:
-    # Deep copy
+    # Deep copy and replace fonts
     style = json.loads(json.dumps(style_data))
+    style = replace_font_names(style)
     
     style["id"] = f"immich-map-{theme}-{mode}"
     style["name"] = f"Immich Map ({theme} - {mode})"
@@ -49,20 +63,6 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
         if not layout:
             continue
 
-        # Adjust text-font: demotiles has Noto Sans Regular, Noto Sans Bold, Noto Sans Italic
-        if "text-font" in layout:
-            font = layout["text-font"]
-            if font == ["Noto Sans Medium"]:
-                layout["text-font"] = ["Noto Sans Bold"]
-            elif isinstance(font, list) and len(font) == 5 and font[0] == "case":
-                # ["case", ["<=", ["get", "min_zoom"], 5], ["literal", ["Noto Sans Medium"]], ["literal", ["Noto Sans Regular"]]]
-                layout["text-font"] = [
-                    "case",
-                    ["<=", ["get", "min_zoom"], 5],
-                    ["literal", ["Noto Sans Bold"]],
-                    ["literal", ["Noto Sans Regular"]],
-                ]
-
         if "text-field" not in layout:
             continue
 
@@ -70,7 +70,7 @@ def transform_style(style_data: dict, mode: str, theme: str) -> dict:
         if layer_id in ("address_label", "roads_oneway"):
             continue
 
-        # Fallback hierarchy: Simplified Chinese -> Traditional Chinese -> English -> Native Local Name
+        # Fallback hierarchy: Simplified Chinese -> Chinese -> Traditional Chinese -> English -> Native Local Name
         # (Prioritizing English before native name prevents local non-Latin scripts like Arabic/Cyrillic when Chinese is absent)
         zh_first_expr = [
             "coalesce",
