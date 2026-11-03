@@ -87,11 +87,11 @@
         "forest",
         "golf_course",
         "wood",
-        "nature_reserve",
-        "forest",
         "scrub",
         "grassland",
         "grass",
+        "glacier",
+        "sand",
         "military",
         "naval_base",
         "airfield"
@@ -133,19 +133,12 @@
           ],
           "#9cd3b4",
           [
-            "in",
+            "==",
             [
               "get",
               "kind"
             ],
-            [
-              "literal",
-              [
-                "wood",
-                "nature_reserve",
-                "forest"
-              ]
-            ]
+            "wood"
           ],
           "#a0d9a0",
           [
@@ -165,31 +158,21 @@
           ],
           "#99d2bb",
           [
-            "in",
+            "==",
             [
               "get",
               "kind"
             ],
-            [
-              "literal",
-              [
-                "glacier"
-              ]
-            ]
+            "glacier"
           ],
           "#e7e7e7",
           [
-            "in",
+            "==",
             [
               "get",
               "kind"
             ],
-            [
-              "literal",
-              [
-                "sand"
-              ]
-            ]
+            "sand"
           ],
           "#e2e0d7",
           [
@@ -639,7 +622,7 @@
       "filter": [
         "all",
         [
-          "!has",
+          "has",
           "is_tunnel"
         ],
         [
@@ -698,7 +681,7 @@
       "filter": [
         "all",
         [
-          "!has",
+          "has",
           "is_tunnel"
         ],
         [
@@ -1320,10 +1303,6 @@
       ],
       "paint": {
         "line-color": "#ebebeb",
-        "line-dasharray": [
-          3,
-          1
-        ],
         "line-width": [
           "interpolate",
           [
@@ -1334,9 +1313,9 @@
             "zoom"
           ],
           14,
-          0,
+          0.5,
           20,
-          7
+          12
         ]
       }
     },
@@ -2680,6 +2659,162 @@
       }
     },
     {
+      "id": "roads_shields",
+      "type": "symbol",
+      "source": "vector",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "in",
+          [
+            "get",
+            "kind"
+          ],
+          [
+            "literal",
+            [
+              "highway",
+              "major_road"
+            ]
+          ]
+        ],
+        [
+          "has",
+          "shield_text"
+        ],
+        [
+          "<=",
+          [
+            "length",
+            [
+              "get",
+              "shield_text"
+            ]
+          ],
+          5
+        ]
+      ],
+      "layout": {
+        "icon-image": [
+          "match",
+          [
+            "get",
+            "network"
+          ],
+          "US:I",
+          [
+            "concat",
+            "US:I-",
+            [
+              "length",
+              [
+                "get",
+                "shield_text"
+              ]
+            ],
+            "char"
+          ],
+          "NL:S-road",
+          [
+            "concat",
+            "NL:S-road-",
+            [
+              "length",
+              [
+                "get",
+                "shield_text"
+              ]
+            ],
+            "char"
+          ],
+          [
+            "concat",
+            "generic_shield-",
+            [
+              "length",
+              [
+                "get",
+                "shield_text"
+              ]
+            ],
+            "char"
+          ]
+        ],
+        "text-field": [
+          "case",
+          [
+            "all",
+            [
+              "has",
+              "name:zh-Hans"
+            ],
+            [
+              "has",
+              "name:en"
+            ],
+            [
+              "!=",
+              [
+                "get",
+                "name:zh-Hans"
+              ],
+              [
+                "get",
+                "name:en"
+              ]
+            ]
+          ],
+          [
+            "concat",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            "\n",
+            [
+              "get",
+              "name:en"
+            ]
+          ],
+          [
+            "coalesce",
+            [
+              "get",
+              "name:zh-Hans"
+            ],
+            [
+              "get",
+              "name:zh"
+            ],
+            [
+              "get",
+              "name:zh-Hant"
+            ],
+            [
+              "get",
+              "name:en"
+            ],
+            [
+              "get",
+              "name"
+            ]
+          ]
+        ],
+        "text-font": [
+          "Noto Sans Regular"
+        ],
+        "text-size": 8,
+        "icon-size": 0.8,
+        "symbol-placement": "line",
+        "icon-rotation-alignment": "viewport",
+        "text-rotation-alignment": "viewport"
+      },
+      "paint": {
+        "text-color": "#938a8d"
+      }
+    },
+    {
       "id": "roads_labels_major",
       "type": "symbol",
       "source": "vector",
@@ -2802,7 +2937,24 @@
               "school",
               "animal",
               "toilets",
-              "drinking_water"
+              "drinking_water",
+              "post_office",
+              "building",
+              "townhall",
+              "restaurant",
+              "fast_food",
+              "cafe",
+              "bar",
+              "supermarket",
+              "convenience",
+              "books",
+              "beauty",
+              "electronics",
+              "clothes",
+              "attraction",
+              "museum",
+              "theatre",
+              "artwork"
             ]
           ]
         ],
@@ -2830,6 +2982,8 @@
           ],
           "station",
           "train_station",
+          "townhall",
+          "building",
           [
             "get",
             "kind"
@@ -2978,11 +3132,67 @@
                 "school",
                 "animal",
                 "toilets",
-                "drinking_water"
+                "drinking_water",
+                "post_office",
+                "building",
+                "townhall"
               ]
             ]
           ],
           "#6A5B8F",
+          [
+            "in",
+            [
+              "get",
+              "kind"
+            ],
+            [
+              "literal",
+              [
+                "supermarket",
+                "convenience",
+                "books",
+                "beauty",
+                "electronics",
+                "clothes"
+              ]
+            ]
+          ],
+          "#1A8CBD",
+          [
+            "in",
+            [
+              "get",
+              "kind"
+            ],
+            [
+              "literal",
+              [
+                "restaurant",
+                "fast_food",
+                "cafe",
+                "bar"
+              ]
+            ]
+          ],
+          "#CB6704",
+          [
+            "in",
+            [
+              "get",
+              "kind"
+            ],
+            [
+              "literal",
+              [
+                "attraction",
+                "museum",
+                "theatre",
+                "artwork"
+              ]
+            ]
+          ],
+          "#EF56BA",
           "#e2dfda"
         ],
         "text-halo-color": "#e2dfda",
@@ -3790,6 +4000,6 @@
       }
     }
   ],
-  "sprite": "https://static.immich.cloud/tiles/sprites/v2/light",
+  "sprite": "https://static.immich.cloud/tiles/sprites/v4/light",
   "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf"
 }
