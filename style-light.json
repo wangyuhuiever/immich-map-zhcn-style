@@ -956,7 +956,15 @@
       ],
       "paint": {
         "fill-color": "#cccccc",
-        "fill-opacity": 0.5
+        "fill-opacity": [
+          "step",
+          [
+            "zoom"
+          ],
+          0.5,
+          15,
+          0
+        ]
       }
     },
     {
@@ -2220,6 +2228,104 @@
           5,
           18,
           15
+        ]
+      }
+    },
+    {
+      "id": "buildings_3d",
+      "type": "fill-extrusion",
+      "source": "vector",
+      "source-layer": "buildings",
+      "minzoom": 14,
+      "filter": [
+        "in",
+        "kind",
+        "building",
+        "building_part"
+      ],
+      "paint": {
+        "fill-extrusion-color": "#d0cecc",
+        "fill-extrusion-opacity": [
+          "step",
+          [
+            "zoom"
+          ],
+          0,
+          15,
+          1
+        ],
+        "fill-extrusion-height": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          15,
+          0,
+          16,
+          [
+            "coalesce",
+            [
+              "get",
+              "height"
+            ],
+            [
+              "+",
+              [
+                "coalesce",
+                [
+                  "get",
+                  "min_height"
+                ],
+                0
+              ],
+              5
+            ]
+          ]
+        ],
+        "fill-extrusion-base": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          15,
+          0,
+          16,
+          [
+            "min",
+            [
+              "coalesce",
+              [
+                "get",
+                "min_height"
+              ],
+              0
+            ],
+            [
+              "coalesce",
+              [
+                "get",
+                "height"
+              ],
+              [
+                "+",
+                [
+                  "coalesce",
+                  [
+                    "get",
+                    "min_height"
+                  ],
+                  0
+                ],
+                5
+              ]
+            ]
+          ]
         ]
       }
     },
